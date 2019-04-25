@@ -6,21 +6,28 @@ describe('Checkout http://localhost:3000/home', function () {
     before(async function() {
         driver = await new Builder().forBrowser('chrome').build();
     });
-    it('Login for phuketlist', async function() {
+    it('Add task item and then delete for phuketlist', async function() {
         // Load the page
         await driver.get('http://localhost:3000/home');
+        
         // Find the search box by id
         await driver.findElement(By.linkText("Login")).click();
-        //search for text fields
+
+        // Log in first
         await driver.findElement(By.id("email")).sendKeys("testUser@gmail.com");
         await driver.findElement(By.id("password")).sendKeys("testUser");
-        await driver.findElement(By.className("btn btn-primary btn-block ")).click();
-        await driver.wait(until.elementLocated(By.id('new_task')), 10000).sendKeys("chips");
-        await driver.findElement(By.className("btn btn-outline-success")).click();
-        await driver.wait(until.elementLocated(By.id("chips")));
-        await driver.findElement(By.className("fa fa-trash fa-2x")).click();
-        driver.sleep(1000);
-            driver.switchTo().alert().accept();
+        await driver.findElement(By.xpath("//button[contains(text(),'Login')]")).click();
+
+        // Create item
+        await driver.wait(until.elementLocated(By.id('new_task')), 10000).sendKeys("Lorem Ipsum");
+        await driver.findElement(By.xpath("//button[contains(text(),'Add New Task')]")).click();
+
+        // Now delete item
+        await driver.wait(until.elementLocated(By.xpath("//*[@title=\"delete-Lorem Ipsum\"]"))).click();
+
+        // Log out
+        await driver.findElement(By.linkText("Account")).click();
+        await driver.findElement(By.linkText("Sign out")).click();
     });
     // close the browser after running tests
     after(() => driver && driver.quit());
