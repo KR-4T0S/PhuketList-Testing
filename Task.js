@@ -7,6 +7,8 @@ describe('Checkout http://localhost:3000/home', function () {
         driver = await new Builder().forBrowser('chrome').build();
     });
     it('Add task item and then delete for phuketlist', async function() {
+		await driver.manage().window().maximize();
+			
         // Load the page
         await driver.get('http://localhost:3000/home');
         
@@ -20,7 +22,7 @@ describe('Checkout http://localhost:3000/home', function () {
 
         // Create item
         await driver.wait(until.elementLocated(By.id('new_task')), 10000).sendKeys("Lorem Ipsum");
-        await driver.findElement(By.xpath("//button[contains(text(),'Add New Task')]")).click();
+        await driver.wait(until.elementLocated(By.xpath("//button[contains(text(),'Add New Task')]"))).click();
 
         // Now delete item
         await driver.wait(until.elementLocated(By.xpath("//*[@title=\"delete-Lorem Ipsum\"]"))).click();

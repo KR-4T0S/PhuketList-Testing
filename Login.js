@@ -7,6 +7,8 @@ describe('Checkout http://localhost:3000/home', function () {
         driver = await new Builder().forBrowser('chrome').build();
     });
     it('Login for phuketlist', async function() {
+		await driver.manage().window().maximize();
+		
         // Load the page
         await driver.get('http://localhost:3000/home');
         // Find the search box by id
