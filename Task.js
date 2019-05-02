@@ -25,7 +25,7 @@ describe('Checkout http://localhost:3000/home', function () {
         await driver.wait(until.elementLocated(By.xpath("//button[contains(text(),'Add New Task')]"))).click();
 
         // Now delete item
-        await driver.wait(until.elementLocated(By.xpath("//*[@title=\"delete-Lorem Ipsum\"]"))).click();
+        await driver.wait(until.elementLocated(By.xpath("//*[@title=\"delete-Lorem Ipsum\"]")), 10000).click();
 
         // Log out
         await driver.findElement(By.linkText("Account")).click();
